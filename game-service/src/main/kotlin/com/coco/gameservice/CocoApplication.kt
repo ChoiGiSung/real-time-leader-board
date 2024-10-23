@@ -1,4 +1,4 @@
-package com.leaderboard.coco
+package com.coco.gameservice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
