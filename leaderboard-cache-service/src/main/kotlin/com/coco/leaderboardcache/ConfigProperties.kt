@@ -28,6 +28,6 @@ class ConfigProperties(
         lateinit var port: String
         lateinit var leaderboardCollectionKey: String
         lateinit var leaderboardCacheCollectionKey: String
-        val leaderboardCacheThrottleThreshold: Long by lazy { 500 }
+        var leaderboardCacheThrottleThreshold: Long = 0
     }
 }
