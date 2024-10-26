@@ -42,7 +42,7 @@ class LeaderboardCacheConsumer(
         //update leaderboard cache which stores only top 10 users
         redisLeaderboardCacheTemplate.opsForValue().set(leaderBoardCacheCollectionKey, leaderboardUpdate)
 
-        //publish leaderBoard updated record to "leaderboard"  kafka topic
+        //todo publish leaderBoard updated record to "leaderboard"  kafka topic
 //        kafkaLeaderboardTemplate.send("leaderboard", leaderboardUpdate)
 
     }

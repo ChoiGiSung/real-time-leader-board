@@ -1,5 +1,5 @@
 rootProject.name = "coco"
 include("game-service")
-include("db-service")
-include("nosql-service")
+include("rdb-game-score-service")
+include("nosql-game-score-service")
 include("leaderboard-cache-service")
