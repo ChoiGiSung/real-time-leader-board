@@ -7,8 +7,8 @@ import java.time.Instant
 
 @Component
 @KafkaListener(
-    topics = ["\${kafka-properties.game-score-topic}"],
-    groupId = "rdb-\${kafka-properties.game-score-topic}"
+    topics = ["\${kafka.game-score-topic}"],
+    groupId = "rdb-\${kafka.game-score-topic}"
 )
 class UserScoreService(
     private val userScoreRepository: UserScoreRepository

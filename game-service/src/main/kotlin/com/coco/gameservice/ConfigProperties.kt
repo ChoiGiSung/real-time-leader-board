@@ -10,7 +10,7 @@ class ConfigProperties(
 ) {
 
     @Bean
-    @ConfigurationProperties(prefix = "kafka-properties")
+    @ConfigurationProperties(prefix = "kafka")
     fun kafkaProperties() = KafkaProperties()
 
 
