@@ -47,3 +47,8 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./initdb.d:/docker-entrypoint-initdb.d
+  redis:
+    container_name: game-score-redis
+    image: redis:6.2.5
+    ports:
+      - '6379:6379'
