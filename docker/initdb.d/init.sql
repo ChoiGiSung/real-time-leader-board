@@ -1,1 +1,22 @@
-CREATE DATABASE IF NOT EXISTS dlt_event;
+CREATE DATABASE IF NOT EXISTS coco;
+
+CREATE TABLE IF NOT EXISTS coco.user_score(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    score INT NOT NULL,
+    created_at DATETIME NOT NULL,
+    PRIMARY KEY (id)
+    )
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS coco.users(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nickname VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;

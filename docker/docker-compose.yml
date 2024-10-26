@@ -41,7 +41,7 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: dlt_event
+      MYSQL_DATABASE: coco
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
