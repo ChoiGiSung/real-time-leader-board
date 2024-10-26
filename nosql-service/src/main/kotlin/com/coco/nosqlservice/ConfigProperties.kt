@@ -21,7 +21,7 @@ class ConfigProperties(
 
     class KafkaProperties {
         lateinit var gameScoreTopic: String
-        lateinit var leaderboardScoreTopic: String
+        lateinit var leaderboardChangeTopic: String
     }
 
     class RedisProperties {

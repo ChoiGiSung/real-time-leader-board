@@ -15,7 +15,7 @@ import java.time.Instant
 class UserScoreService(
     private val configProperties: ConfigProperties,
     private val redisTemplate: RedisTemplate<String, String>,
-    private val kafkaTemplate: KafkaTemplate<String, String>,
+    private val kafkaTemplate: KafkaTemplate<String, LeaderBoardChangeDto>,
 ) {
 
     @KafkaHandler
@@ -27,8 +27,8 @@ class UserScoreService(
             .incrementScore(leaderBoardCollectionKey, record.userId.toString(), score.toDouble())
 
         kafkaTemplate.send(
-            configProperties.kafkaProperties().leaderboardScoreTopic,
-            LeaderBoardDto(record.createdAt).toString()
+            configProperties.kafkaProperties().leaderboardChangeTopic,
+            LeaderBoardChangeDto(record.createdAt)
         )
     }
 
@@ -39,7 +39,7 @@ class UserScoreService(
         val createdAt: Instant
     )
 
-    data class LeaderBoardDto(
+    data class LeaderBoardChangeDto(
         val createdAt: Instant
     )
 }
