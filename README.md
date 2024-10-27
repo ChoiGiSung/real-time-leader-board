@@ -5,3 +5,8 @@ https://medium.com/@mayilb77/design-a-real-time-leaderboard-system-for-millions-
 
 
 ![img.png](img.png)
+
+# How to run
+1. docker-compose -f ./docker/docker-compose.yml up -d
+2. run all modules
+3. visit http://localhost:8084/leaderboard
