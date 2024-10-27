@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Leaderboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h2>Leaderboard</h2>
+<p>Last Updated: <span id="lastModifiedDate"></span></p>
+<table id="leaderboard">
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>User ID</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- User data will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    // WebSocket 설정
+    const socket = new SockJS('http://localhost:8084/online-game');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, (frame) => {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/live-updates/leaderboard', (res) => {
+            updateLeaderboard(JSON.parse(res.body));
+        });
+    }, (error) => {
+        console.error('Error with websocket', error);
+    });
+
+    function updateLeaderboard(data) {
+        // Last updated timestamp
+        $('#lastModifiedDate').text(new Date(data.createdAt).toLocaleString());
+
+        // Clear existing leaderboard
+        $("#leaderboard tbody").empty();
+
+        // Build new leaderboard rows
+        data.users.forEach(user => {
+            let rowHtml = `<tr>
+                <td>${user.rank}</td>
+                <td>${user.userId}</td>
+                <td>${user.score}</td>
+            </tr>`;
+            $("#leaderboard tbody").append(rowHtml);
+        });
+    }
+</script>
+</body>
+</html>
