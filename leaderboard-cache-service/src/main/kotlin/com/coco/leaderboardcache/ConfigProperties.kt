@@ -9,19 +9,19 @@ import org.springframework.context.annotation.Configuration
 class ConfigProperties(
 ) {
 
-//    @Bean
-//    @ConfigurationProperties(prefix = "kafka")
-//    fun kafkaProperties() = KafkaProperties()
+    @Bean
+    @ConfigurationProperties(prefix = "kafka")
+    fun kafkaProperties() = KafkaProperties()
 
 
     @Bean
     @ConfigurationProperties(prefix = "redis")
     fun redisProperties() = RedisProperties()
 
-//
-//    class KafkaProperties {
-//        lateinit var leaderboardChangeTopic: String
-//    }
+
+    class KafkaProperties {
+        lateinit var leaderboardTopic: String
+    }
 
     class RedisProperties {
         lateinit var host: String

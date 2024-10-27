@@ -4,6 +4,7 @@ import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.ZSetOperations
 import org.springframework.kafka.annotation.KafkaHandler
 import org.springframework.kafka.annotation.KafkaListener
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 import java.time.Instant
 
@@ -17,13 +18,14 @@ class LeaderboardCacheConsumer(
     private val redisGameScoreTemplate: RedisTemplate<String, String>,
 //    private val redisUserCacheTemplate: RedisTemplate<String, String>,
     private val redisLeaderboardCacheTemplate: RedisTemplate<String, LeaderBoardDto>,
-//    private val kafkaLeaderboardTemplate: KafkaTemplate<String, LeaderBoardDto>,
+    private val kafkaLeaderboardTemplate: KafkaTemplate<String, LeaderBoardDto>,
 ) {
 
     @KafkaHandler
     fun leaderboardCacheConsumer(record: LeaderBoardDto) {
         val leaderBoardCollectionKey = configProperties.redisProperties().leaderboardCollectionKey
         val leaderBoardCacheCollectionKey = configProperties.redisProperties().leaderboardCacheCollectionKey
+        val kafkaLeaderboardTopic = configProperties.kafkaProperties().leaderboardTopic
 
         val leaderBoardCache = redisLeaderboardCacheTemplate.opsForValue().get(leaderBoardCacheCollectionKey)
         val now = Instant.now()
@@ -42,8 +44,8 @@ class LeaderboardCacheConsumer(
         //update leaderboard cache which stores only top 10 users
         redisLeaderboardCacheTemplate.opsForValue().set(leaderBoardCacheCollectionKey, leaderboardUpdate)
 
-        //todo publish leaderBoard updated record to "leaderboard"  kafka topic
-//        kafkaLeaderboardTemplate.send("leaderboard", leaderboardUpdate)
+        // publish leaderBoard updated record to "leaderboard"  kafka topic
+        kafkaLeaderboardTemplate.send(kafkaLeaderboardTopic, leaderboardUpdate)
 
     }
 
