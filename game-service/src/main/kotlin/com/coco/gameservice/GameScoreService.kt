@@ -24,8 +24,8 @@ class GameScoreService(
     private fun buildGameScore(): GameScoreDto {
         val random = Random()
         return GameScoreDto(
-            random.nextLong(1000_000) + 1,
-            random.nextInt(100) + 1,
+            random.nextLong(100) + 1,
+            random.nextInt(1_000) + 1,
             Instant.now()
         )
     }
